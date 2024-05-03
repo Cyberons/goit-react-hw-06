@@ -1,23 +1,21 @@
-import PropTypes from 'prop-types';
-import './Contact.css';
+import css from './Contact.module.css'
+import { RiContactsFill } from "react-icons/ri";
+import { FaPhoneAlt } from "react-icons/fa";
+import { useDispatch } from 'react-redux'
+import {deleteContact} from '../../redux/contactsSlice'
 
-export default function Contact({ contact, onDeleteContact }) {
-  const { id, name, number } = contact;
 
-  const handleDeleteClick = () => {
-    onDeleteContact(id);
-  };
-
-  return (
-    <li className="contact-item">
-      <p>Name: {name}</p>
-      <p>Number: {number}</p>
-      <button onClick={handleDeleteClick}>Delete</button>
-    </li>
-  );
+export default function Contact({ name, number, id }) {
+    const dispatch = useDispatch()
+    return (
+        <>
+            <div className={css.boxContactCont}>
+                <div className={css.boxText}><RiContactsFill size={18} /> <p>{name}</p></div>
+               <div className={css.boxText}><FaPhoneAlt size={16}/> <p>{number}</p></div>
+                
+            </div>
+            
+            <button className={css.contBtn} onClick={() => dispatch(deleteContact(id))}>Delete</button>
+    </>
+)
 }
-
-Contact.propTypes = {
-  contact: PropTypes.object.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-};

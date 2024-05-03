@@ -1,24 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  items: []
-};
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: {
+    items: [], // Initial state with an empty array of contacts
+  },
   reducers: {
-    addContact(state, action) {
-      state.items.push(action.payload);
+    addContact: {
+      reducer: (state, action) => {
+        state.items.push(action.payload); // Adding the new contact to the state
+      },
+      prepare({ name, number }) {
+        return {
+          payload: {
+            name: name,
+            number: number,
+            id: crypto.randomUUID(), // Generating a unique ID for the contact using crypto.randomUUID()
+          },
+        };
+      },
     },
-    deleteContact(state, action) {
-      state.items = state.items.filter(contact => contact.id !== action.payload);
-    }
-  }
+    deleteContact: {
+      reducer: (state, action) => {
+        // Reducer function to delete a contact from the state
+        state.items = state.items.filter((item) => item.id !== action.payload);
+      },
+    },
+  },
 });
 
 export const { addContact, deleteContact } = contactsSlice.actions;
-
-export const selectContacts = state => state.contacts.items;
-
 export default contactsSlice.reducer;
