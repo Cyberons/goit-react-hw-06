@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import SearchBox from '../SearchBox/SearchBox';
-import { selectContacts } from '../../redux/filtersSlice';
+import { changeFilter } from '../../redux/filtersSlice';
 import { addContact } from '../../redux/contactsSlice';
 
 function App() {
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(changeFilter);
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
